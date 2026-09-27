@@ -23,3 +23,14 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,Arial,sans-serif;letter-spa
 .hero-layout{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:74px;padding:78px 0 87px}.hero h1{font-size:clamp(3.8rem,6.1vw,6.35rem);margin-bottom:22px}.hero-lead{max-width:660px}.hero-bio{color:#b8c9da;max-width:620px;font-size:1rem;line-height:1.7;margin:18px 0 0}.hero-actions{margin-top:30px}.hero-foot{margin:38px 0 0}.hero-portrait{position:relative;width:100%;max-width:485px;justify-self:end;animation:rise .8s .18s both}.hero-portrait img{display:block;width:100%;aspect-ratio:4/4.65;object-fit:cover;object-position:center 15%;border-radius:9px;border:1px solid #60738c;box-shadow:19px 19px 0 #30415a}.hero-portrait-label{position:absolute;bottom:23px;left:-17px;display:flex;align-items:center;gap:24px;background:var(--lime);color:var(--navy);padding:13px 15px;font-size:.73rem;font-weight:800;letter-spacing:.12em;box-shadow:0 10px 25px #09172855}.hero-portrait-label span{font-size:1.25rem;line-height:1}.hero-copy>*:nth-child(6){animation-delay:.5s}
 @media(max-width:850px){.hero-layout{grid-template-columns:1fr;gap:45px;padding:70px 0 84px}.hero-portrait{justify-self:start;max-width:450px}.hero h1{font-size:clamp(3.65rem,11vw,5.4rem)}}
 @media(max-width:620px){.hero-layout{padding:55px 0 70px}.hero h1{font-size:clamp(3.4rem,14vw,4.9rem)}.hero-portrait{max-width:360px;width:calc(100% - 18px)}.hero-portrait img{aspect-ratio:4/4.2;box-shadow:12px 12px 0 #30415a}.hero-portrait-label{left:-7px;font-size:.64rem}.hero-bio{font-size:.95rem}.hero-foot{margin-top:30px}}
+
+/* A clear name mark and recognizable tool icons */
+.brand-mark{background:none;border-radius:0;overflow:hidden}
+.brand-mark img{display:block;width:37px;height:37px}
+.service-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.service-card{min-height:255px}
+.service-index{margin-top:22px}
+.logo-tile{min-height:90px}
+.logo-tile img{width:40px;height:40px}
+@media(max-width:850px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.service-grid{grid-template-columns:1fr}.service-card{min-height:0}.logo-tile{min-height:76px}.logo-tile img{width:30px;height:30px}}
