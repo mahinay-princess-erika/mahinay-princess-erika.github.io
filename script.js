@@ -27,24 +27,58 @@ document.querySelectorAll('.logo-tile img').forEach((logo) => {
   if (logo.complete && logo.naturalWidth === 0) fallback();
 });
 
-// Keep an original download available when a browser cannot play the file.
-document.querySelectorAll('.video-card').forEach((card) => {
-  const video = card.querySelector('video');
-  const fallback = card.querySelector('.video-fallback');
-  const status = card.querySelector('.video-status');
+// Open a video separately so the portfolio grid stays compact.
+const sampleDialog = document.getElementById('sampleVideoDialog');
+if (sampleDialog) {
+  const player = document.getElementById('sampleVideoPlayer');
+  const poster = document.getElementById('sampleVideoPoster');
+  const title = document.getElementById('sampleVideoTitle');
+  const status = document.getElementById('sampleVideoStatus');
+  const download = document.getElementById('sampleVideoDownload');
+  let previousOverflow = '';
+
   const showDownload = () => {
-    video.pause();
-    video.hidden = true;
-    fallback.hidden = false;
+    if (!sampleDialog.open) return;
+    player.pause();
+    player.hidden = true;
+    poster.hidden = false;
     status.hidden = false;
   };
-  video.addEventListener('error', showDownload, true);
-  video.addEventListener('loadeddata', () => {
-    if (video.videoWidth === 0 || video.videoHeight === 0) showDownload();
-  });
-  video.addEventListener('play', () => {
-    document.querySelectorAll('.video-card video').forEach((other) => {
-      if (other !== video) other.pause();
+
+  document.querySelectorAll('.watch-video').forEach((button) => {
+    button.addEventListener('click', () => {
+      const card = button.closest('[data-video-src]');
+      title.textContent = card.dataset.videoTitle;
+      poster.src = card.dataset.videoPoster;
+      player.poster = card.dataset.videoPoster;
+      download.href = card.dataset.videoSrc;
+      download.download = card.dataset.videoFile;
+      poster.hidden = true;
+      status.hidden = true;
+      player.hidden = false;
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      sampleDialog.showModal();
+      player.src = card.dataset.videoSrc;
+      player.load();
+      player.play().catch(() => {
+        if (player.error) showDownload();
+      });
     });
   });
-});
+
+  player.addEventListener('error', showDownload);
+  player.addEventListener('loadeddata', () => {
+    if (player.videoWidth === 0 || player.videoHeight === 0) showDownload();
+  });
+  document.getElementById('sampleVideoClose').addEventListener('click', () => sampleDialog.close());
+  sampleDialog.addEventListener('click', (event) => {
+    if (event.target === sampleDialog) sampleDialog.close();
+  });
+  sampleDialog.addEventListener('close', () => {
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    document.body.style.overflow = previousOverflow;
+  });
+}
