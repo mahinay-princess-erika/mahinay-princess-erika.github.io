@@ -32,11 +32,16 @@ document.querySelectorAll('.video-card').forEach((card) => {
   const video = card.querySelector('video');
   const fallback = card.querySelector('.video-fallback');
   const status = card.querySelector('.video-status');
-  video.addEventListener('error', () => {
+  const showDownload = () => {
+    video.pause();
     video.hidden = true;
     fallback.hidden = false;
     status.hidden = false;
-  }, true);
+  };
+  video.addEventListener('error', showDownload, true);
+  video.addEventListener('loadeddata', () => {
+    if (video.videoWidth === 0 || video.videoHeight === 0) showDownload();
+  });
   video.addEventListener('play', () => {
     document.querySelectorAll('.video-card video').forEach((other) => {
       if (other !== video) other.pause();
