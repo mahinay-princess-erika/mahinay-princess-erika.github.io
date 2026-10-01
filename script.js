@@ -26,3 +26,20 @@ document.querySelectorAll('.logo-tile img').forEach((logo) => {
   logo.addEventListener('error', fallback);
   if (logo.complete && logo.naturalWidth === 0) fallback();
 });
+
+// Keep an original download available when a browser cannot play the file.
+document.querySelectorAll('.video-card').forEach((card) => {
+  const video = card.querySelector('video');
+  const fallback = card.querySelector('.video-fallback');
+  const status = card.querySelector('.video-status');
+  video.addEventListener('error', () => {
+    video.hidden = true;
+    fallback.hidden = false;
+    status.hidden = false;
+  }, true);
+  video.addEventListener('play', () => {
+    document.querySelectorAll('.video-card video').forEach((other) => {
+      if (other !== video) other.pause();
+    });
+  });
+});
