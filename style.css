@@ -70,3 +70,5 @@ button:focus-visible{outline:3px solid #699622;outline-offset:4px}
 .sample-video-download{display:inline-block;font-size:.88rem;font-weight:800;text-underline-offset:4px;margin-top:18px}
 @media(max-width:850px){.creative-heading{align-items:start;flex-direction:column;gap:12px}.creative-heading>p{max-width:none}}
 @media(max-width:620px){.creative-work{margin-top:32px;padding-top:26px}.creative-project-grid{grid-template-columns:1fr}.creative-card .creative-preview,.creative-card .creative-preview img{height:190px}.sample-video-dialog{padding:16px}.sample-video-head h3{font-size:1rem}}
+
+.experience-details{margin:0;padding-left:18px;color:var(--muted)}.experience-details li{padding-left:3px}.experience-details li+li{margin-top:9px}
