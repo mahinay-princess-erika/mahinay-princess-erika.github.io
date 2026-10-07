@@ -124,7 +124,7 @@ if (designDialog) {
       previewPages = card.dataset.previewPages ? JSON.parse(card.dataset.previewPages) : [preview.getAttribute('src')];
       designTitle.textContent = card.querySelector('.sample-copy h3, .sample-copy h5').textContent;
       pageNav.hidden = previewPages.length === 1;
-      closePreview.setAttribute('aria-label', card.classList.contains('report-card') ? 'Close report' : 'Close design');
+      closePreview.setAttribute('aria-label', card.classList.contains('sop-card') ? 'Close SOP' : card.classList.contains('report-card') ? 'Close report' : 'Close design');
       designStage.classList.remove('is-zoomed');
       designZoom.textContent = 'Zoom in';
       designZoom.setAttribute('aria-pressed', 'false');
