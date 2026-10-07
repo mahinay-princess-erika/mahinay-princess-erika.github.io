@@ -82,3 +82,52 @@ if (sampleDialog) {
     document.body.style.overflow = previousOverflow;
   });
 }
+
+
+// Keep graphic previews on the portfolio page.
+const designDialog = document.getElementById('sampleDesignDialog');
+if (designDialog) {
+  const designImage = document.getElementById('sampleDesignImage');
+  const designTitle = document.getElementById('sampleDesignTitle');
+  const designStage = document.getElementById('sampleDesignStage');
+  const designZoom = document.getElementById('sampleDesignZoom');
+  let designPreviousOverflow = '';
+  let designTrigger;
+
+  document.querySelectorAll('.graphic-card .view-design').forEach((button) => {
+    button.addEventListener('click', () => {
+      const card = button.closest('.graphic-card');
+      const preview = card.querySelector('.graphic-preview img');
+      designTrigger = button;
+      designImage.src = preview.getAttribute('src');
+      designImage.alt = preview.alt;
+      designTitle.textContent = card.querySelector('h5').textContent;
+      designStage.classList.remove('is-zoomed');
+      designZoom.textContent = 'Zoom in';
+      designZoom.setAttribute('aria-pressed', 'false');
+      designPreviousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      designDialog.showModal();
+      designStage.scrollTop = 0;
+      designStage.scrollLeft = 0;
+    });
+  });
+
+  designZoom.addEventListener('click', () => {
+    const zoomed = designStage.classList.toggle('is-zoomed');
+    designZoom.textContent = zoomed ? 'Fit image' : 'Zoom in';
+    designZoom.setAttribute('aria-pressed', String(zoomed));
+    designStage.scrollTop = 0;
+  });
+  document.getElementById('sampleDesignClose').addEventListener('click', () => designDialog.close());
+  designDialog.addEventListener('click', (event) => {
+    if (event.target !== designDialog) return;
+    const rect = designDialog.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) designDialog.close();
+  });
+  designDialog.addEventListener('close', () => {
+    document.body.style.overflow = designPreviousOverflow;
+    designImage.removeAttribute('src');
+    designTrigger?.focus();
+  });
+}
