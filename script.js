@@ -84,42 +84,70 @@ if (sampleDialog) {
 }
 
 
-// Keep graphic previews on the portfolio page.
+// Preview graphic designs and multi-page reports on the portfolio.
 const designDialog = document.getElementById('sampleDesignDialog');
 if (designDialog) {
   const designImage = document.getElementById('sampleDesignImage');
   const designTitle = document.getElementById('sampleDesignTitle');
   const designStage = document.getElementById('sampleDesignStage');
   const designZoom = document.getElementById('sampleDesignZoom');
+  const closePreview = document.getElementById('sampleDesignClose');
+  const pageNav = document.getElementById('samplePreviewPages');
+  const previousPage = document.getElementById('samplePreviewPrevious');
+  const nextPage = document.getElementById('samplePreviewNext');
+  const pageCount = document.getElementById('samplePreviewPageCount');
   let designPreviousOverflow = '';
   let designTrigger;
+  let previewPages = [];
+  let currentPage = 0;
+  let previewAlt = '';
 
-  document.querySelectorAll('.graphic-card .view-design').forEach((button) => {
+  const showPreviewPage = (index) => {
+    currentPage = index;
+    designImage.src = previewPages[currentPage];
+    designImage.alt = previewPages.length > 1
+      ? designTitle.textContent + ', page ' + (currentPage + 1) + ' of ' + previewPages.length
+      : previewAlt;
+    pageCount.textContent = 'Page ' + (currentPage + 1) + ' of ' + previewPages.length;
+    previousPage.disabled = currentPage === 0;
+    nextPage.disabled = currentPage === previewPages.length - 1;
+    designStage.scrollTop = 0;
+    designStage.scrollLeft = 0;
+  };
+
+  document.querySelectorAll('.view-design').forEach((button) => {
     button.addEventListener('click', () => {
-      const card = button.closest('.graphic-card');
-      const preview = card.querySelector('.graphic-preview img');
+      const card = button.closest('.sample-card');
+      const preview = card.querySelector('.graphic-preview img, .report-preview img');
       designTrigger = button;
-      designImage.src = preview.getAttribute('src');
-      designImage.alt = preview.alt;
-      designTitle.textContent = card.querySelector('h5').textContent;
+      previewAlt = preview.alt;
+      previewPages = card.dataset.previewPages ? JSON.parse(card.dataset.previewPages) : [preview.getAttribute('src')];
+      designTitle.textContent = card.querySelector('.sample-copy h3, .sample-copy h5').textContent;
+      pageNav.hidden = previewPages.length === 1;
+      closePreview.setAttribute('aria-label', card.classList.contains('report-card') ? 'Close report' : 'Close design');
       designStage.classList.remove('is-zoomed');
       designZoom.textContent = 'Zoom in';
       designZoom.setAttribute('aria-pressed', 'false');
       designPreviousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       designDialog.showModal();
-      designStage.scrollTop = 0;
-      designStage.scrollLeft = 0;
+      showPreviewPage(0);
     });
   });
 
+  previousPage.addEventListener('click', () => {
+    if (currentPage > 0) showPreviewPage(currentPage - 1);
+  });
+  nextPage.addEventListener('click', () => {
+    if (currentPage < previewPages.length - 1) showPreviewPage(currentPage + 1);
+  });
   designZoom.addEventListener('click', () => {
     const zoomed = designStage.classList.toggle('is-zoomed');
     designZoom.textContent = zoomed ? 'Fit image' : 'Zoom in';
     designZoom.setAttribute('aria-pressed', String(zoomed));
     designStage.scrollTop = 0;
   });
-  document.getElementById('sampleDesignClose').addEventListener('click', () => designDialog.close());
+  closePreview.addEventListener('click', () => designDialog.close());
   designDialog.addEventListener('click', (event) => {
     if (event.target !== designDialog) return;
     const rect = designDialog.getBoundingClientRect();
