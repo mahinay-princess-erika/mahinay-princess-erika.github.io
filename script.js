@@ -36,6 +36,7 @@ if (sampleDialog) {
   const status = document.getElementById('sampleVideoStatus');
   const download = document.getElementById('sampleVideoDownload');
   let previousOverflow = '';
+  let videoTrigger;
 
   const showDownload = () => {
     if (!sampleDialog.open) return;
@@ -48,6 +49,7 @@ if (sampleDialog) {
   document.querySelectorAll('.watch-video').forEach((button) => {
     button.addEventListener('click', () => {
       const card = button.closest('[data-video-src]');
+      videoTrigger = button;
       title.textContent = card.dataset.videoTitle;
       poster.src = card.dataset.videoPoster;
       player.poster = card.dataset.videoPoster;
@@ -80,6 +82,7 @@ if (sampleDialog) {
     player.removeAttribute('src');
     player.load();
     document.body.style.overflow = previousOverflow;
+    videoTrigger?.focus();
   });
 }
 
@@ -118,13 +121,13 @@ if (designDialog) {
   document.querySelectorAll('.view-design').forEach((button) => {
     button.addEventListener('click', () => {
       const card = button.closest('.sample-card');
-      const preview = card.querySelector('.graphic-preview img, .report-preview img');
+      const preview = card.querySelector('.graphic-preview img, .report-preview img, .admin-preview img');
       designTrigger = button;
       previewAlt = preview.alt;
       previewPages = card.dataset.previewPages ? JSON.parse(card.dataset.previewPages) : [preview.getAttribute('src')];
       designTitle.textContent = card.querySelector('.sample-copy h3, .sample-copy h5').textContent;
       pageNav.hidden = previewPages.length === 1;
-      closePreview.setAttribute('aria-label', card.classList.contains('sop-card') ? 'Close SOP' : card.classList.contains('report-card') ? 'Close report' : 'Close design');
+      closePreview.setAttribute('aria-label', card.classList.contains('sop-card') ? 'Close SOP' : card.classList.contains('report-card') ? 'Close report' : 'Close sample');
       designStage.classList.remove('is-zoomed');
       designZoom.textContent = 'Zoom in';
       designZoom.setAttribute('aria-pressed', 'false');
