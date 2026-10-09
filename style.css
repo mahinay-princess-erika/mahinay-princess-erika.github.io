@@ -41,7 +41,7 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:Manrope,Arial,sans-serif;letter-spa
 .creative-heading .eyebrow{margin-bottom:10px}
 .creative-heading h3{font-size:clamp(1.8rem,3vw,2.6rem);margin:0}
 .creative-heading>p{max-width:260px;color:var(--muted);font-size:.9rem;margin:0}
-.creative-project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.creative-project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:stretch}
 .creative-card{display:flex;flex-direction:column;min-width:0}
 .creative-card .creative-preview{display:block;position:relative;width:100%;height:200px;margin:0;padding:0;border:0;background:var(--navy);overflow:hidden;cursor:pointer}
 .creative-card .creative-preview img{display:block;width:100%;height:200px;object-fit:cover;object-position:center}
