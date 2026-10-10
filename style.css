@@ -127,3 +127,9 @@ body{line-height:1.65}h1,h2,h3{letter-spacing:-.04em}h2{font-size:clamp(2rem,3.7
 #samples .admin-sample-grid .report-downloads{flex-wrap:wrap;gap:14px}
 @media(max-width:850px){#samples .case-study-feature{grid-template-columns:1fr}#samples .case-study-feature .report-preview{min-height:0}#samples .case-study-feature .report-preview img{height:320px}}
 @media(max-width:620px){#samples .case-study-feature .sample-copy{padding:25px}#samples .admin-sample-grid .report-preview img{height:225px}#samples .case-study-feature .report-preview img{height:275px}}
+
+/* Contact profile links */
+.contact-actions{display:flex;flex-direction:column;align-items:flex-start;gap:18px;flex-shrink:0}
+.contact-social-links{display:flex;flex-wrap:wrap;gap:18px}
+.contact-social-links a{font-size:.95rem;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.contact-social-links a:hover{color:#426450}
