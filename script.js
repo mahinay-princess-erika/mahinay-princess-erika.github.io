@@ -34,11 +34,10 @@ if (sampleDialog) {
   const poster = document.getElementById('sampleVideoPoster');
   const title = document.getElementById('sampleVideoTitle');
   const status = document.getElementById('sampleVideoStatus');
-  const download = document.getElementById('sampleVideoDownload');
   let previousOverflow = '';
   let videoTrigger;
 
-  const showDownload = () => {
+  const showPlaybackError = () => {
     if (!sampleDialog.open) return;
     player.pause();
     player.hidden = true;
@@ -53,8 +52,6 @@ if (sampleDialog) {
       title.textContent = card.dataset.videoTitle;
       poster.src = card.dataset.videoPoster;
       player.poster = card.dataset.videoPoster;
-      download.href = card.dataset.videoSrc;
-      download.download = card.dataset.videoFile;
       poster.hidden = true;
       status.hidden = true;
       player.hidden = false;
@@ -64,14 +61,14 @@ if (sampleDialog) {
       player.src = card.dataset.videoSrc;
       player.load();
       player.play().catch(() => {
-        if (player.error) showDownload();
+        if (player.error) showPlaybackError();
       });
     });
   });
 
-  player.addEventListener('error', showDownload);
+  player.addEventListener('error', showPlaybackError);
   player.addEventListener('loadeddata', () => {
-    if (player.videoWidth === 0 || player.videoHeight === 0) showDownload();
+    if (player.videoWidth === 0 || player.videoHeight === 0) showPlaybackError();
   });
   document.getElementById('sampleVideoClose').addEventListener('click', () => sampleDialog.close());
   sampleDialog.addEventListener('click', (event) => {
